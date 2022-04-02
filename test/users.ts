@@ -1,8 +1,8 @@
-const User = artifacts.require("User");
+const Users = artifacts.require("Users");
 
 contract("User", accounts => {
     it("should have an empty array of users", async () => {
-        const user = await User.deployed();
+        const user = await Users.deployed();
         console.log(user.address);
-    });    
-})
+    });
+});
