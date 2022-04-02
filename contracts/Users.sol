@@ -2,13 +2,23 @@
 pragma solidity >=0.4.22 <0.9.0;
 
 contract Users {
-    address public id;
-    string public name;
-    string public email;
+    struct UserInfo {
+        address id;
+        string name;
+        string email;
+    }
 
-    constructor(string memory _name, string memory _email) {
-        id = msg.sender;
-        name = _name;
-        email = _email;
+    mapping(address => UserInfo) public usersInfo;
+    
+    function setMyData(string calldata name, string calldata email) external {
+        UserInfo memory user;
+        user.id = msg.sender;
+        user.name = name;
+        user.email = email;
+        usersInfo[msg.sender] = user;
+    }
+
+    function getUserData(address _address) public view returns (UserInfo memory) {
+        return usersInfo[_address];
     }
 }

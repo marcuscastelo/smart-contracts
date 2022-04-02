@@ -7,23 +7,25 @@
         "compile-contracts": "rm -rf build/contracts && truffle compile",
         "generate-types": "rm -rf ./types && yarn compile-contracts && typechain --target=truffle-v5 'build/contracts/*.json'",
         "generate-migrations": "rm -rf ./migrations && tsc -p ./tsconfig.migrate.json --outDir ./migrations",
-        "migrate": "yarn generate-migrations && truffle migrate",
+        "migrate": "yarn compile-contracts && yarn generate-migrations && truffle migrate",
         "typecheck": "yarn generate-types && tsc --noEmit",
-        "test": "yarn generate-migrations && truffle test"
+        "test": "yarn generate-migrations && truffle test",
+        "clean": "rm -rf ./build ./migrations ./types",
+        "start": "tsc && node ./dist/src/index.js"
     },
     "dependencies": {
         "@typechain/truffle-v5": "^8.0.0",
-        "typechain": "^8.0.0",
         "@types/bn.js": "^4.11.6",
         "@types/chai": "^4.2.11",
         "@types/mocha": "^7.0.2",
         "@types/web3": "^1.2.2",
+        "truffle": "^5.1.22",
+        "typechain": "^8.0.0",
+        "typescript": "^4.6",
+        "web3": "^1.7.1",
         "web3-core": "^1",
         "web3-eth-contract": "^1",
-        "web3-utils": "^1",
-        "web3": "^1",
-        "truffle": "^5.1.22",
-        "typescript": "^4.6"
+        "web3-utils": "^1"
     },
     "devDependencies": {
         "@typechain/truffle-v5": "^8.0.0",

@@ -2,3 +2,4 @@ build/**/*
 migrations/**/*
 node_modules/**/*
 types/**/*
+dist/**/*

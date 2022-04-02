@@ -6,6 +6,11 @@
       "strict": true,
       "target": "ES2018",
       "sourceMap": true,
-      "esModuleInterop": true
-    }
+      "esModuleInterop": true,
+      "outDir": "./dist",
+      "resolveJsonModule": true
+    },
+    "include": [
+      "src/**/*.ts"
+    ],
   }
