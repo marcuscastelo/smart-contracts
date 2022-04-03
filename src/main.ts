@@ -1,3 +1,4 @@
+import { sys } from 'typescript';
 import Web3 from 'web3';
 import usersJsonContract from '../build/contracts/Users.json';
 import { UsersInstance } from '../types/truffle-contracts';
@@ -19,10 +20,25 @@ class UserManager {
     constructor(private userCreds: UserCreds, private users: UsersInstance) { }
 
     async getUserInfo(from: string): Promise<UserInfo> {
-        const user = await this.users.getUserInfo(this.userCreds.address, { from });
+        const userAddress = this.userCreds.address;
+        try {
+            const user = await this.users.getUserInfo(userAddress, { from });
+            return user;
+        } catch (e: any) {
+            console.log(`Error getting user info: ${e.data}`);
+
+            const errorData = Object.values(e.data).entries().next().value[1];
+
+            console.dir(errorData)
+            if (errorData.error === 'revert') {
+                throw new Error(`Error retrieving user info (address=${userAddress}):\n\t Reason (revert): "${errorData.reason}"`);
+            } else {
+                throw e;
+            }
+        }
+            
         //TODO: try-catch
         //TODO: check if from is legit (signature?)
-        return user;
     }
 
     async updateUserInfo(from: string, newInfo: Partial<UserInfo>) {
@@ -37,6 +53,11 @@ class UserManager {
         await this.users.updateUserInfo(userAddress, name, email, { from });
         //TODO: try-catch
         //TODO: check if from is legit (signature?)
+    }
+
+    async updateUserCompanyPrefs(from: string, targetCompany: string, newPrefs: boolean) {
+        const userAddress = this.userCreds.address;
+        await this.users.updateUserCompanyPrefs(userAddress, targetCompany, newPrefs, { from });
     }
 }
 
@@ -60,12 +81,21 @@ async function main() {
     }
 
     const userManager = new UserManager(user1, users);
+    
+    await userManager.updateUserCompanyPrefs(user1.address, company1.address, true);
+    console.log(await userManager.getUserInfo(company1.address));
+    await userManager.updateUserInfo(user1.address, { name: "John" });
+    console.log(await userManager.getUserInfo(company1.address));
 
-    console.log(await userManager.getUserInfo(company1.address));
-    await userManager.updateUserInfo(company1.address, { name: "John" });
-    console.log(await userManager.getUserInfo(company1.address));
+    
 }
 
-main()
+main().then(() => {
+    console.log('Done');
+    sys.exit(0);
 
-export { };
+}).catch((e: any) => {
+    console.error(e);
+});
+
+// export { };
