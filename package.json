@@ -4,9 +4,9 @@
     "main": "index.js",
     "license": "MIT",
     "scripts": {
-        "compile-contracts": "rm -rf build/contracts && truffle compile",
+        "compile-contracts": "rm -rf build/contracts && cd truffle && truffle compile && mv build ..",
         "generate-types": "rm -rf ./types && yarn compile-contracts && typechain --target=truffle-v5 'build/contracts/*.json'",
-        "generate-migrations": "rm -rf ./migrations && tsc -p ./tsconfig.migrate.json --outDir ./migrations",
+        "generate-migrations": "rm -rf ./truffle/migrations && tsc -p ./tsconfig.migrate.json --outDir ./truffle/migrations",
         "migrate": "yarn compile-contracts && yarn generate-migrations && truffle migrate --reset",
         "typecheck": "yarn generate-types && tsc --noEmit",
         "test": "yarn generate-migrations && truffle test",
