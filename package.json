@@ -11,7 +11,7 @@
         "typecheck": "yarn generate-types && tsc --noEmit",
         "test": "yarn generate-migrations && truffle test",
         "clean": "rm -rf ./build ./migrations ./types",
-        "node": "tsc && node ./dist/src/main.js",
+        "start": "tsc && node ./dist/src/main.js",
         "dev": "lite-server"
     },
     "dependencies": {

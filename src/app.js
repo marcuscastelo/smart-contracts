@@ -77,10 +77,13 @@ App = {
     },
   
     renderTasks: async () => {
-        let info = await App.users.getUserInfo(App.account);
+        console.log('renderTasks');
+        let info = await App.users.getUserInfo(App.account, {from: App.account});
         let userName = info[0];
         let userEmail = info[1];
 
+        console.log(`userName: ${userName}`);
+        console.log(`userEmail: ${userEmail}`);
         $('#userName').html(userName);
         $('#userEmail').html(userEmail);
 

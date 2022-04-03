@@ -73,13 +73,13 @@ async function example() {
     const users = await getContractInstance();
 
     const user1: UserCreds = {
-        address: '0x64e96dFB728b9DEb809C601076f9FA094213Ad92',
-        privateKey: 'c2f756520fbeb7f8831c295e47099973ab6caaed38770de80f2ff0fc04e30bb9',
+        address: '0x393f813F7D4e0Aa03b5AC5D4445A6431b84175A7',
+        privateKey: '-',
     }
 
     const company1: UserCreds = {
-        address: '0xd6A39cf9257D63C0E63aec2662579295f4E13d32',
-        privateKey: '8f52cd6c4d3167dada9c276128f798d022434484a0ff3efda1bdf23c43cc08ea',
+        address: '0x39b3Da63e20565add1B2E9e46d5D2732B6693426',
+        privateKey: '-',
     }
 
     const userManager = new UserManager(user1, users);
@@ -90,10 +90,10 @@ async function example() {
     console.log(await userManager.getUserInfo(company1.address));
 }
 
-// example().then(() => {
-//     console.log('Done');
-//     sys.exit(0);
+example().then(() => {
+    console.log('Done');
+    sys.exit(0);
 
-// }).catch((e: any) => {
-//     console.error(e);
-// });
+}).catch((e: any) => {
+    console.error(e);
+});
